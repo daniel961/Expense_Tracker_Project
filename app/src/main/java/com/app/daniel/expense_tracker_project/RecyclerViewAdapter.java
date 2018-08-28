@@ -63,16 +63,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return holder;
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) { //this methode call for every object
-        Log.d(TAG, "onBindViewHolder: called ");
+        Log.d(TAG, "onBindViewHolder: called " + position);
         holder.name_tv.setText(SpesificExpensesList.get(position).getProductName());
         holder.price_tv.setText(Integer.toString(SpesificExpensesList.get(position).getExpenseAmount()));
 
         holder.Item_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, SpesificExpensesList.get(position).getProductName() , Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, String.valueOf(position), Toast.LENGTH_SHORT).show();
+                SystemActivity.isArrayChanged = true;
+                SystemActivity.position = position;
+                //Toast.makeText(context, SpesificExpensesList.get(position).getProductName() , Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -83,8 +87,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public int getItemCount() {
         int counter=0;
-        counter = SpesificExpensesList.size()+FixedExpensesList.size();
+        counter = SpesificExpensesList.size();
         return counter;
+    }
+
+
+//the problem i have here is to get notify in the System Activity that item had removed
+    public void deleteSelectedItem(int position){
+        SpesificExpensesList.remove(position);
+        notifyDataSetChanged();
+
     }
 
 

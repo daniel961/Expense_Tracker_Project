@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,7 +42,10 @@ public class SystemActivity extends AppCompatActivity {
     TextView NameDisplay_TV,OutcomeDisplay_TV,IncomeDisplay_TV,MoneyLeft_TV;
 
 
-
+    Thread thread;
+    Handler handler = new Handler();
+    static boolean isArrayChanged = false;
+    static int position;
 
     String full_name,password;
     int incomePerMonth;
@@ -96,8 +100,33 @@ public class SystemActivity extends AppCompatActivity {
         final Animation downtoup = AnimationUtils.loadAnimation(this,R.anim.downtoup);
 
 
+        //This Thread Wating for Change in Variable isArrayChanged boolean var
+        //wating to get postion item to delete from Array
+        //and call to the function to delete
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(isArrayChanged != true){
+                //Log.i("Thread","Wating for Change in the Array");
+
+                }
+                Log.i("Thread","Change Found" + position);
+                //call function to delete the Array in the current position
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        deleteSelectedItem(position);
+                    }
+                });
+
+                isArrayChanged = false;
+                //who call this threade need to make it run again
 
 
+            }
+        });
+
+         thread.start();
 
 
 
@@ -242,6 +271,7 @@ public class SystemActivity extends AppCompatActivity {
                         Save_List_Data_NormalExpenses(); //save the new cleared lists to File
                         Load_List_Data_NormalExpenses(); //Load From File (NOT NECCECERY)
                         updateTVboxes(); //Update TextsVIEWS
+                        updateRecyclerViewList();
 
 
 
@@ -272,6 +302,19 @@ public class SystemActivity extends AppCompatActivity {
 
 
 
+
+    //-------------------------------------------------------------------------------------------
+    public void deleteSelectedItem(int position){ //delete selected item from the list inside the profile and refresh all
+        CurrentProfile.deleteExpenseByPosition(position); //delete from the profile list
+        Save_List_Data_NormalExpenses(); //save list to device
+        updateTVboxes(); //update ui
+        updateRecyclerViewList(); //update the RecyclerList with the new List
+        //here is the bug! IllegalThreadStateException
+        thread.start(); //reStart the Waiting for Changes Thread
+
+
+
+    }
 
     //-------------------------------------------------------------------------------------------
     public void updateRecyclerViewList(){
@@ -308,7 +351,7 @@ public class SystemActivity extends AppCompatActivity {
         String json = gson.toJson(CurrentProfile.getCurrentMonthExpensesList()); //todo do the same for the FixedExpenses list
         editor.putString(Monthly_Expense_list,json);
         editor.apply();
-        Toast.makeText(this, "שמירת נתונים במכשיר בוצעה בהצלחה", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "שמירת נתונים במכשיר בוצעה בהצלחה", Toast.LENGTH_SHORT).show();
 
         }
 
@@ -324,16 +367,7 @@ public class SystemActivity extends AppCompatActivity {
 
     }
 
-    //-------------------------------------------------------------------------------------------
 
-
-    /*
-    public void recycler_view_Update_item_added(){
-        adapter.setSpesificExpensesList((ArrayList<FinancialExpense>) CurrentProfile.getCurrentMonthExpensesList()); //update the new arrayList to the adapter
-        adapter.notifyDataSetChanged(); //notify on new data
-
-    }
-    */
 
 
     //-------------------------------------------------------------------------------------------

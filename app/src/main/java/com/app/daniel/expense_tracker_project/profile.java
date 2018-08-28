@@ -190,4 +190,10 @@ public class profile {
     public void setFixedMonthlyExpenseList(List<FinancialExpense> fixedMonthlyExpenseList) {
         FixedMonthlyExpenseList = fixedMonthlyExpenseList;
     }
+
+    public void deleteExpenseByPosition(int position){
+        CurrentMonthExpensesList.remove(position);
+    }
+
+
 }

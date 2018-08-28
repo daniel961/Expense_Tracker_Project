@@ -1,6 +1,7 @@
 package com.app.daniel.expense_tracker_project;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
@@ -29,10 +30,11 @@ public class profile {
     int income; //TOTAL how much you earn per month
     int outcome; // TOTAL how much you spend this month //calculate from list AND from mothlyExpenses(Cars and more)
 
-
     //list of Expenses
-    private  List<FinancialExpense> FixedMonthlyExpenseList = new ArrayList<FinancialExpense>(); //list of Fixed monthly expenditure    //NOT USED YET!!!
-    private  List<FinancialExpense> CurrentMonthExpensesList = new ArrayList<FinancialExpense>(); //list of Expenses of the month
+    List<FinancialExpense> FixedMonthlyExpenseList = new ArrayList<FinancialExpense>(); //list of Fixed monthly expenditure    //NOT USED YET!!!
+    List<FinancialExpense> CurrentMonthExpensesList = new ArrayList<FinancialExpense>(); //list of Expenses of the month
+
+
 
 
 
@@ -67,24 +69,29 @@ public class profile {
 
 
 
-    public int ExpensesCalculator(){ //running on financialExpensesList AND mothlyExpenses(Cars and more) = calculate Expenses //for start calc onlu normal expenses
+    public int ExpensesCalculator() { //running on financialExpensesList AND mothlyExpenses(Cars and more) = calculate Expenses //for start calc onlu normal expenses
         int sum = 0;
 
-        DateFormat df = new SimpleDateFormat("MM"+"YY");
+        DateFormat df = new SimpleDateFormat("MM" + "YY");
         Date today = Calendar.getInstance().getTime();
         String reportDate = df.format(today);
 
-        for(int i=0;i<CurrentMonthExpensesList.size();i++){
-            if(CurrentMonthExpensesList.get(i).getDateSignature().equals(reportDate)==true){
-                sum+=CurrentMonthExpensesList.get(i).getExpenseAmount();
-            }else{
-                CurrentMonthExpensesList.remove(i); //if the DateSignature is Wrong the object delete from the list
-                 }
-        }
 
-        this.outcome = sum;
-        return sum;
-    }
+            for (int i = 0; i < CurrentMonthExpensesList.size(); i++) {
+                if (CurrentMonthExpensesList.get(i).getDateSignature().equals(reportDate) == true) {
+                    sum += CurrentMonthExpensesList.get(i).getExpenseAmount();
+                } else {
+                    CurrentMonthExpensesList.remove(i); //if the DateSignature is Wrong the object delete from the list
+                }
+            }
+
+
+
+
+
+            this.outcome = sum;
+            return sum;
+        }
 
 
 
@@ -99,7 +106,7 @@ public class profile {
 
 
     public void AddNormalExpense(int amount,String productName){ //Add Expense to the list of NormalExpenses
-        CurrentMonthExpensesList.add(new FinancialExpense(amount,productName)); //add new Expnese
+        CurrentMonthExpensesList.add(new FinancialExpense(amount, productName)); //add new Expnese
     }
 
 

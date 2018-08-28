@@ -24,11 +24,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<FinancialExpense> FixedExpensesList = new ArrayList<FinancialExpense>();
     Context context;
 
+
+
+
+
+    //Constructor
     public RecyclerViewAdapter(Context context, List<FinancialExpense> spesificExpensesList, List<FinancialExpense> fixedExpensesList) {
         SpesificExpensesList = (ArrayList<FinancialExpense>) spesificExpensesList;
         FixedExpensesList = (ArrayList<FinancialExpense>) fixedExpensesList;
         this.context = context;
     }
+
+
+
+
 
     public ArrayList<FinancialExpense> getSpesificExpensesList() {
         return SpesificExpensesList;

@@ -51,9 +51,8 @@ public class SystemActivity extends AppCompatActivity {
     public static final String Expenses_Lists_data = "Expenses_lists",Monthly_Expense_list = "Monthly_Expense_list";
 
     profile CurrentProfile = new profile();
+    RecyclerViewAdapter adapter;
 
-    /*RecyclerView Adapter Variable*/
-    RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, CurrentProfile.getCurrentMonthExpensesList(),CurrentProfile.getFixedMonthlyExpenseList());
 
 
 
@@ -163,21 +162,7 @@ public class SystemActivity extends AppCompatActivity {
                     load_data();
                     updateTVboxes();
 
-
-
-
-
-
-
                 }
-
-
-                init_recycler_view(); //initialize recycler view
-
-
-
-
-
 
             }
         });
@@ -205,6 +190,9 @@ public class SystemActivity extends AppCompatActivity {
                     Save_List_Data_NormalExpenses(); //Save list with SharePreferences
                     //todo load new list after save
                     Load_List_Data_NormalExpenses(); //Load list with SharePreferences
+
+
+                    updateRecyclerViewList();
 
                 }
 
@@ -275,6 +263,7 @@ public class SystemActivity extends AppCompatActivity {
 
 
 
+        init_recycler_view(); //initialize recycler view
 
 
 
@@ -283,7 +272,18 @@ public class SystemActivity extends AppCompatActivity {
 
 
 
+
     //-------------------------------------------------------------------------------------------
+    public void updateRecyclerViewList(){
+
+        adapter.setSpesificExpensesList((ArrayList<FinancialExpense>) CurrentProfile.getCurrentMonthExpensesList());
+        adapter.notifyDataSetChanged();
+
+    }
+
+    //-------------------------------------------------------------------------------------------
+
+
 
     public void save_data(){ //save data for first time (First time enter app save)
         SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferencesName,MODE_PRIVATE); //private means that no other app can change our preferences
@@ -308,13 +308,15 @@ public class SystemActivity extends AppCompatActivity {
         String json = gson.toJson(CurrentProfile.getCurrentMonthExpensesList()); //todo do the same for the FixedExpenses list
         editor.putString(Monthly_Expense_list,json);
         editor.apply();
-        Toast.makeText(this, "הוצאה נוספה בהצלחה", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "שמירת נתונים במכשיר בוצעה בהצלחה", Toast.LENGTH_SHORT).show();
 
         }
 
 
     //-------------------------------------------------------------------------------------------
     public void init_recycler_view(){
+
+        adapter = new RecyclerViewAdapter(this, CurrentProfile.getCurrentMonthExpensesList(),CurrentProfile.getFixedMonthlyExpenseList());
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recycler_view_Widget);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -343,7 +345,7 @@ public class SystemActivity extends AppCompatActivity {
         Type type = new TypeToken<ArrayList<FinancialExpense>>() {}.getType(); //to know which kind is the array we get from json string
         CurrentProfile.setCurrentMonthExpensesList((List<FinancialExpense>) gson.fromJson(json,type));
         //todo the same operation for the fixedExpense List
-        Toast.makeText(this, "טעינת נתונים בוצעה בהצלחה בהצלחה", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "טעינת נתונים מהמכשיר בוצעה בהצלחה ", Toast.LENGTH_SHORT).show();
 
 
 

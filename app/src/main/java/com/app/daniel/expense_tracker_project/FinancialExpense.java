@@ -12,6 +12,7 @@ public class FinancialExpense {
     String ProductName;
     String Information;
     String DateSignature;
+    String fullDateSignature;
     UUID ExpenseId;
     
 
@@ -76,6 +77,20 @@ public class FinancialExpense {
     public String getDateSignature() {
         return DateSignature;
     }
+
+    public String getFullDateSignature() {
+
+        DateFormat df = new SimpleDateFormat("YY"+"MM"+"dd");
+        Date today = Calendar.getInstance().getTime();
+        String fullDateSignature = df.format(today);
+
+        return fullDateSignature;
+
+
+
+    }
+
+
 
 
 }

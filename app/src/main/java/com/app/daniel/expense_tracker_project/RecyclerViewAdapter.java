@@ -67,18 +67,39 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) { //this methode call for every object
         Log.d(TAG, "onBindViewHolder: called " + position);
-        holder.name_tv.setText(SpesificExpensesList.get(position).getProductName());
-        holder.price_tv.setText(Integer.toString(SpesificExpensesList.get(position).getExpenseAmount()));
 
-        holder.Item_layout.setOnClickListener(new View.OnClickListener() {
+
+        //fix the date signature string to string humans can read
+        StringBuilder fixedDateStr = new StringBuilder(SpesificExpensesList.get(position).getFullDateSignature());
+        fixedDateStr.insert(2,'/');
+        fixedDateStr.insert(5,'/');
+
+
+        if(SpesificExpensesList.get(position).getProductName().toString().length() >= 13 ){
+            holder.name_tv.setTextSize(12);
+            holder.name_tv.setText(SpesificExpensesList.get(position).getProductName());
+
+        }else{
+            holder.name_tv.setText(SpesificExpensesList.get(position).getProductName());
+        }
+
+        holder.price_tv.setText(Integer.toString(SpesificExpensesList.get(position).getExpenseAmount()));
+        holder.date_tv.setText(fixedDateStr);
+
+
+
+        holder.Item_layout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(context, String.valueOf(position), Toast.LENGTH_SHORT).show();
+            public boolean onLongClick(View v) {
+                Toast.makeText(context, "הוצאה בשם " + "''" + SpesificExpensesList.get(position).getProductName()+ "''" +  " נמחקה מהרשימה", Toast.LENGTH_SHORT).show();
                 SystemActivity.isArrayChanged = true;
                 SystemActivity.position = position;
-                //Toast.makeText(context, SpesificExpensesList.get(position).getProductName() , Toast.LENGTH_SHORT).show();
+                return true;
             }
         });
+
+
+
 
 
 
@@ -92,7 +113,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
-//the problem i have here is to get notify in the System Activity that item had removed
+
     public void deleteSelectedItem(int position){
         SpesificExpensesList.remove(position);
         notifyDataSetChanged();
@@ -105,7 +126,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView price_tv,name_tv;
+        TextView price_tv,name_tv,date_tv;
         RelativeLayout Item_layout;
 
 
@@ -113,7 +134,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(itemView);
             price_tv = (TextView)itemView.findViewById(R.id.Price_tv);
             name_tv = (TextView)itemView.findViewById(R.id.Expense_name_tv);
+            date_tv = (TextView)itemView.findViewById(R.id.date_tv);
             Item_layout = (RelativeLayout)itemView.findViewById(R.id.Item_layout);
+
 
         }
 

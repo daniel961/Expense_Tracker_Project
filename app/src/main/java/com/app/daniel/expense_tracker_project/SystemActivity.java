@@ -17,6 +17,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,14 +38,16 @@ public class SystemActivity extends AppCompatActivity {
 
     EditText fullname_ET,password_ET,Income_ET,ProductName_ET,ProductAmount_ET;
     Button Submit_BTN,AddNewOutcome,AppSettings,UserSettings,AddnewOutcomeSubmitButton,exit_NEW_OUTCOME_WINDOWE_Btn,
-    DeleteAllExpenses_BTN;
+    DeleteAllExpenses_BTN,exitGuide_btn,nextGuide_btn,prevGuide_btn;
     LinearLayout NewUserLayout,MainSystem,newExpenseLayout;
+    RelativeLayout appGuideLayout;
     TextView NameDisplay_TV,OutcomeDisplay_TV,IncomeDisplay_TV,MoneyLeft_TV;
 
 
     Thread thread;
     Handler handler = new Handler();
     static boolean isArrayChanged = false;
+    boolean threadRun = true;
     static int position;
 
     String full_name,password;
@@ -78,6 +81,13 @@ public class SystemActivity extends AppCompatActivity {
 
 
 
+        //appGuideLayout
+        appGuideLayout = (RelativeLayout)findViewById(R.id.appGuideLayout);
+
+
+
+
+
         //mainSystemLayout
         MainSystem = (LinearLayout)findViewById(R.id.MainSystem);
         NameDisplay_TV = (TextView)findViewById(R.id.NameDisplay_TV);
@@ -106,26 +116,23 @@ public class SystemActivity extends AppCompatActivity {
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while(isArrayChanged != true){
-                //Log.i("Thread","Wating for Change in the Array");
-
-                }
-                Log.i("Thread","Change Found" + position);
-                //call function to delete the Array in the current position
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        deleteSelectedItem(position);
+                while(threadRun == true) { //always waiting for change
+                    Log.i("Thread","thread running...");
+                    while (isArrayChanged != true) {
+                        //Log.i("Thread","Waiting for Change in the Array");
                     }
-                });
-
-                isArrayChanged = false;
-                //who call this threade need to make it run again
-
-
+                    Log.i("Thread", "Change Found" + position);
+                    //call function to delete the Array in the current position
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            deleteSelectedItem(position);
+                        }
+                    });
+                    isArrayChanged = false;
+                }
             }
         });
-
          thread.start();
 
 
@@ -310,7 +317,7 @@ public class SystemActivity extends AppCompatActivity {
         updateTVboxes(); //update ui
         updateRecyclerViewList(); //update the RecyclerList with the new List
         //here is the bug! IllegalThreadStateException
-        thread.start(); //reStart the Waiting for Changes Thread
+        //thread.start(); //reStart the Waiting for Changes Thread
 
 
 

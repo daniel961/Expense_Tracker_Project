@@ -15,9 +15,41 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="16dp"
         android:text="שם ההוצאה"
-        android:textStyle="bold"
         android:textColor="@color/icons"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/Expense_name_tv"
+        android:layout_alignEnd="@+id/Expense_name_tv"
+        android:text="שם ההוצאה"
+        android:textColor="@color/icons"
+        android:textSize="10sp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/Expense_name_tv"
+        android:layout_alignEnd="@+id/Price_tv"
+        android:text="מחיר"
+        android:textColor="@color/icons"
+        android:textSize="10sp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/Expense_name_tv"
+        android:layout_alignEnd="@+id/date_tv"
+        android:text="תאריך החודש"
+        android:textColor="@color/icons"
+        android:textSize="10sp" />
+
+
+
+
 
     <TextView
         android:id="@+id/Price_tv"
@@ -28,8 +60,22 @@
         android:layout_marginStart="59dp"
         android:text="מחיר"
         android:textColor="@color/icons"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="18sp"
+         />
+
+    <TextView
+        android:id="@+id/date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="133dp"
+        android:text="תאריך"
+        android:textColor="@color/icons"
+        android:textSize="15sp" />
+
+
 
     <ImageView
         android:layout_width="35dp"

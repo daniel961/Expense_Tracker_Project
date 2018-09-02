@@ -32,7 +32,7 @@ public class profile {
 
     //list of Expenses
     List<FinancialExpense> FixedMonthlyExpenseList = new ArrayList<FinancialExpense>(); //list of Fixed monthly expenditure    //NOT USED YET!!!
-    List<FinancialExpense> CurrentMonthExpensesList = new ArrayList<FinancialExpense>(); //list of Expenses of the month
+    List<FinancialExpense> CurrentMonthExpensesList; //= new ArrayList<FinancialExpense>(); //list of Expenses of the month
 
 
 
@@ -53,10 +53,13 @@ public class profile {
         this.haveCar = false;
         this.rentHouse = false;
         this.gotLoan = false;
+        CurrentMonthExpensesList = new ArrayList<FinancialExpense>();
+
 
     }
 
     public profile() { //emptyConstructor
+        CurrentMonthExpensesList = new ArrayList<FinancialExpense>();
 
 
     }
@@ -76,6 +79,7 @@ public class profile {
         Date today = Calendar.getInstance().getTime();
         String reportDate = df.format(today);
 
+        if(CurrentMonthExpensesList != null) {
 
             for (int i = 0; i < CurrentMonthExpensesList.size(); i++) {
                 if (CurrentMonthExpensesList.get(i).getDateSignature().equals(reportDate) == true) {
@@ -85,7 +89,7 @@ public class profile {
                 }
             }
 
-
+        }
 
 
 
@@ -106,6 +110,9 @@ public class profile {
 
 
     public void AddNormalExpense(int amount,String productName){ //Add Expense to the list of NormalExpenses
+        if(CurrentMonthExpensesList == null){
+            CurrentMonthExpensesList = new ArrayList<FinancialExpense>();
+        }
         CurrentMonthExpensesList.add(0,new FinancialExpense(amount, productName)); //add new Expnese
     }
 

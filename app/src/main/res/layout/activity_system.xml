@@ -8,6 +8,122 @@
     tools:context=".SystemActivity">
 
 
+
+
+    <RelativeLayout
+        android:id="@+id/personal_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/header"
+        android:visibility="gone"
+        android:padding="15dp"
+        >
+
+
+        <Button
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:id="@+id/back_personal_layout_btn"
+            android:text="חזור"/>
+
+        <TextView
+            android:id="@+id/personal_titel_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/back_personal_layout_btn"
+            android:gravity="center"
+            android:text="איזור אישי"
+            android:textColor="@color/icons"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/personal_titel_tv"
+            android:text="באיזור זה תוכל לשנות כל הפרטים האישיים"
+            android:gravity="center"
+            android:textColor="@color/icons"
+            />
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:textColorHint="@color/icons"
+            android:layout_marginTop="117dp">
+
+            <EditText
+                android:textColorHint="@color/icons"
+                android:textColorLink="@color/icons"
+                android:textColorHighlight="@color/icons"
+                android:shadowColor="@color/icons"
+                android:textColor="@color/icons"
+                android:id="@+id/personal_name_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="כתוב שם חדש"
+                android:inputType="textPersonName"
+                android:padding="10dp"
+                android:textDirection="rtl" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/icons"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="162dp">
+
+            <EditText
+                android:textColorHint="@color/icons"
+                android:textColorLink="@color/icons"
+                android:textColorHighlight="@color/icons"
+                android:shadowColor="@color/icons"
+                android:textColor="@color/icons"
+                android:id="@+id/personal_income_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="גובה הכנסה חודשית"
+                android:inputType="number"
+                android:padding="10dp"
+                android:textDirection="rtl" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/personal_submit_details_btn"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:text="אישור פרטים" />
+
+
+
+
+
+
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -553,10 +669,6 @@
 
 
     </LinearLayout>
-
-
-
-
 
 
 

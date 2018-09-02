@@ -151,7 +151,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public int getItemCount() {
         int counter=0;
-        counter = SpesificExpensesList.size();
+        if(SpesificExpensesList != null) {
+            counter = SpesificExpensesList.size();
+
+        }
         return counter;
     }
 

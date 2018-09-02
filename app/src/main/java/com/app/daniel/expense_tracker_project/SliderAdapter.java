@@ -62,11 +62,18 @@ public class SliderAdapter extends PagerAdapter {
         ImageView introduction_image = (ImageView)view.findViewById(R.id.introduction_image);
         TextView head_tv = (TextView)view.findViewById(R.id.head_tv);
         TextView desc_tv = (TextView)view.findViewById(R.id.desc_tv);
+        TextView number_slide = (TextView)view.findViewById(R.id.number_slide);
 
 
         introduction_image.setImageResource(slide_images[position]);
         head_tv.setText(slide_headings[position]);
         desc_tv.setText(slide_desc[position]);
+
+        if(position == 2){
+            number_slide.setText("התחל להנות מהחסכון");
+        }else {
+            number_slide.setText("החלק לשקופית הבאה");
+        }
 
         container.addView(view);
 

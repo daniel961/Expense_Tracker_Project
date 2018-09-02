@@ -68,9 +68,15 @@ public class SystemActivity extends AppCompatActivity {
     //vars for ViewPager
     LinearLayout introduction_layout;
     ViewPager mSlideViewPager;
-    LinearLayout dotsLayout;
     SliderAdapter sliderAdapter;
     Button intro_close_btn;
+
+
+    //personal_layout
+    RelativeLayout personal_layout;
+    Button back_personal_layout_btn,personal_submit_details_btn;
+    EditText personal_name_et,personal_income_et;
+
 
 
 
@@ -86,7 +92,12 @@ public class SystemActivity extends AppCompatActivity {
         sliderAdapter = new SliderAdapter(this);
         mSlideViewPager.setAdapter(sliderAdapter);
 
-
+        //personal_layout_refs
+        personal_layout  = (RelativeLayout) findViewById(R.id.personal_layout);
+        back_personal_layout_btn = (Button) findViewById(R.id.back_personal_layout_btn);
+        personal_name_et = (EditText)findViewById(R.id.personal_name_et);
+        personal_income_et = (EditText)findViewById(R.id.personal_income_et);
+        personal_submit_details_btn = (Button)findViewById(R.id.personal_submit_details_btn);
 
 
 
@@ -166,6 +177,8 @@ public class SystemActivity extends AppCompatActivity {
         if(!(sharedPreferences.contains(NAME_KEY))){ //return true if exist
             //show NewUserLayout
             Toast.makeText(this, "לא נמצא יוזר", Toast.LENGTH_SHORT).show();
+            introduction_layout.setVisibility(View.VISIBLE);
+            introduction_layout.bringToFront();
             NewUserLayout.setVisibility(View.VISIBLE);
         }else{
             //todo add password layout for security (in the appSettings you can add bolean var for check if the user wants to add password each enterence)
@@ -178,6 +191,8 @@ public class SystemActivity extends AppCompatActivity {
 
             Toast.makeText(this, "יוזר קיים עובר לאקטיביטי הבא", Toast.LENGTH_SHORT).show();
         }
+
+
 
 
 
@@ -250,6 +265,72 @@ public class SystemActivity extends AppCompatActivity {
         });
 
 
+
+
+        UserSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                personal_layout.setVisibility(View.VISIBLE);
+                MainSystem.setVisibility(View.GONE);
+                personal_layout.bringToFront();
+            }
+        });
+
+
+        back_personal_layout_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                personal_layout.setVisibility(View.GONE);
+                MainSystem.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+
+        personal_submit_details_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(
+                        personal_name_et.getText().toString().length()>15||   //checks its not too long
+                                personal_income_et.getText().toString().length()>7||
+                                personal_name_et.getText().toString().isEmpty()|| //checks its not empty
+                                personal_income_et.getText().toString().isEmpty()||
+                                Integer.parseInt(personal_income_et.getText().toString())>50000)
+                {
+                    //show dialog introductions about the fill
+                    AlertDialog.Builder IntroductionsFields = new AlertDialog.Builder(SystemActivity.this);
+                    IntroductionsFields.setTitle("שים לב הפרטים לא נכונים").setMessage("1. משכורת חודשית מקסימלית 50 אלף ש''ח" + "\n" +
+                            "2. ודא שכל השדות מלאים"
+                            +"\n"  +
+                            "3. מקסימום 15  תווים (עבור כל שדה)"
+                    ).setPositiveButton("הבנתי", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).show();
+
+                }else{
+                    //profile profile = new profile(fullname_ET.getText().toString(),password_ET.getText().toString(),Double.parseDouble(Income_ET.getText().toString()),getApplicationContext());
+                    //save data
+                    incomePerMonth = Integer.parseInt(personal_income_et.getText().toString());
+                    full_name = personal_name_et.getText().toString();
+                    save_data();            //save data for first time (First time enter app save)
+                    personal_layout.setVisibility(View.GONE);
+                    MainSystem.setVisibility(View.VISIBLE);
+                    MainSystem.setAnimation(fade_in);
+                    load_data();
+                    updateTVboxes();
+
+                }
+
+
+
+
+
+            }
+        });
 
 
         //----------------------------------------SystemActivity Program Start HERE!--------------------------------------------------

@@ -18,16 +18,13 @@ public class FinancialExpense {
 
 
 
-
-
-
-
-
     public FinancialExpense(int expenseAmount, String product) {
         ExpenseAmount = expenseAmount;
         ProductName = product;
         DateSignature = DateToConstruct();
         ExpenseId = UUID.randomUUID();
+        fullDateSignature = CalcFullDateSignature();
+
     }
 
 
@@ -54,6 +51,7 @@ public class FinancialExpense {
         return ExpenseAmount;
     }
 
+
     public void setExpenseAmount(int expenseAmount) {
         ExpenseAmount = expenseAmount;
     }
@@ -78,16 +76,21 @@ public class FinancialExpense {
         return DateSignature;
     }
 
-    public String getFullDateSignature() {
 
-        DateFormat df = new SimpleDateFormat("YY"+"MM"+"dd");
+
+    public String CalcFullDateSignature(){
+        String date;
+        DateFormat df = new SimpleDateFormat("dd"+"MM"+"YY");
         Date today = Calendar.getInstance().getTime();
-        String fullDateSignature = df.format(today);
+        date = df.format(today);
 
+        return date;
+    }
+
+
+
+    public String getFullDateSignature() {
         return fullDateSignature;
-
-
-
     }
 
 

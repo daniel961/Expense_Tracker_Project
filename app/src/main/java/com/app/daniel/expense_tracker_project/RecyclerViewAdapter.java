@@ -1,5 +1,6 @@
 package com.app.daniel.expense_tracker_project;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,16 +26,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<FinancialExpense> SpesificExpensesList = new ArrayList<FinancialExpense>();
     private ArrayList<FinancialExpense> FixedExpensesList = new ArrayList<FinancialExpense>();
     Context context;
+    View mView;
 
 
 
 
 
     //Constructor
-    public RecyclerViewAdapter(Context context, List<FinancialExpense> spesificExpensesList, List<FinancialExpense> fixedExpensesList) {
+    public RecyclerViewAdapter(Context context, List<FinancialExpense> spesificExpensesList, List<FinancialExpense> fixedExpensesList,View view) {
         SpesificExpensesList = (ArrayList<FinancialExpense>) spesificExpensesList;
         FixedExpensesList = (ArrayList<FinancialExpense>) fixedExpensesList;
         this.context = context;
+        this.mView = view;
     }
 
 
@@ -91,9 +96,47 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.Item_layout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(context, "הוצאה בשם " + "''" + SpesificExpensesList.get(position).getProductName()+ "''" +  " נמחקה מהרשימה", Toast.LENGTH_SHORT).show();
-                SystemActivity.isArrayChanged = true;
-                SystemActivity.position = position;
+
+                StringBuilder fixedDateStr = new StringBuilder(SpesificExpensesList.get(position).getFullDateSignature());
+                fixedDateStr.insert(2,'/');
+                fixedDateStr.insert(5,'/');
+
+                LayoutInflater factory = LayoutInflater.from(context);
+                final View removeExpenseDialogView = factory.inflate(R.layout.remove_expense_dialog_layout, null);
+                final AlertDialog deleteDialog = new AlertDialog.Builder(context).create();
+                deleteDialog.setView(removeExpenseDialogView);
+                deleteDialog.show();
+
+                Button delete_dialog_btn = (Button)removeExpenseDialogView.findViewById(R.id.delete_dialog_btn);
+                Button dismiss_dialog_btn = (Button)removeExpenseDialogView.findViewById(R.id.dismiss_dialog_btn);
+                TextView expense_name_dialog_tv = (TextView)removeExpenseDialogView.findViewById(R.id.expense_name_dialog_tv);
+
+
+                expense_name_dialog_tv.setText( SpesificExpensesList.get(position).getProductName() + " " +
+                        fixedDateStr + " במחיר: " +
+                        String.valueOf(SpesificExpensesList.get(position).getExpenseAmount()));
+
+
+                dismiss_dialog_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteDialog.dismiss();
+                    }
+                });
+
+                delete_dialog_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(context, "הוצאה בשם " + "''" + SpesificExpensesList.get(position).getProductName()+ "''" +  " נמחקה מהרשימה", Toast.LENGTH_SHORT).show();
+                        SystemActivity.isArrayChanged = true;
+                        SystemActivity.position = position;
+                        deleteDialog.dismiss();
+                    }
+                });
+
+
+
+
                 return true;
             }
         });

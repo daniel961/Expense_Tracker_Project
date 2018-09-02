@@ -8,6 +8,66 @@
     tools:context=".SystemActivity">
 
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/intro_wall"
+    android:visibility="gone"
+    android:id="@+id/introduction_layout"
+
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/intro_close_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="סגור הוראות שימוש"/>
+
+    </LinearLayout>
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPagerIntro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        </android.support.v4.view.ViewPager>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <RelativeLayout
         android:id="@+id/appGuideLayout"
@@ -61,18 +121,15 @@
     </RelativeLayout>
 
 
-
-
-
     <LinearLayout
 
         android:id="@+id/newExpenseLayout"
         android:layout_width="300dp"
-        android:layout_height="330dp"
-        android:layout_alignParentBottom="true"
+        android:layout_height="280dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp"
-        android:background="@color/header"
+        android:layout_marginTop="117dp"
+        android:background="@color/header2"
         android:orientation="vertical"
         android:padding="8dp"
         android:visibility="gone">
@@ -82,13 +139,13 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:layout_gravity="right"
-                android:gravity="right"
-                android:layout_marginLeft="250dp"
+                android:id="@+id/exit_NEW_OUTCOME_WINDOWE_Btn"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:layout_marginLeft="250dp"
                 android:background="@drawable/closebtn"
-                android:id="@+id/exit_NEW_OUTCOME_WINDOWE_Btn"/>
+                android:gravity="right" />
 
         </LinearLayout>
 
@@ -117,18 +174,6 @@
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:orientation="horizontal">
-
-            <Button
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="קבועה חודשית" />
-
-            <Button
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="חד פעמית" />
 
 
         </LinearLayout>

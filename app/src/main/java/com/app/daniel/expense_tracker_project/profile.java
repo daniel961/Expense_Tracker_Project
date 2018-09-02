@@ -106,7 +106,7 @@ public class profile {
 
 
     public void AddNormalExpense(int amount,String productName){ //Add Expense to the list of NormalExpenses
-        CurrentMonthExpensesList.add(new FinancialExpense(amount, productName)); //add new Expnese
+        CurrentMonthExpensesList.add(0,new FinancialExpense(amount, productName)); //add new Expnese
     }
 
 

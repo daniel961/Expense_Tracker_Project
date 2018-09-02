@@ -5,12 +5,14 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Handler;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -43,6 +45,8 @@ public class SystemActivity extends AppCompatActivity {
     RelativeLayout appGuideLayout;
     TextView NameDisplay_TV,OutcomeDisplay_TV,IncomeDisplay_TV,MoneyLeft_TV;
 
+    View mView;
+
 
     Thread thread;
     Handler handler = new Handler();
@@ -61,6 +65,13 @@ public class SystemActivity extends AppCompatActivity {
     RecyclerViewAdapter adapter;
 
 
+    //vars for ViewPager
+    LinearLayout introduction_layout;
+    ViewPager mSlideViewPager;
+    LinearLayout dotsLayout;
+    SliderAdapter sliderAdapter;
+    Button intro_close_btn;
+
 
 
     @Override
@@ -68,7 +79,19 @@ public class SystemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_system);
 
+        //vars for ViewPager refs
+        introduction_layout = (LinearLayout) findViewById(R.id.introduction_layout);
+        mSlideViewPager = (ViewPager) findViewById(R.id.viewPagerIntro);
+        intro_close_btn = (Button)findViewById(R.id.intro_close_btn);
+        sliderAdapter = new SliderAdapter(this);
+        mSlideViewPager.setAdapter(sliderAdapter);
 
+
+
+
+
+
+        mView = getLayoutInflater().inflate(R.layout.remove_expense_dialog_layout,null);
 
 
 
@@ -202,6 +225,32 @@ public class SystemActivity extends AppCompatActivity {
 
             }
         });
+
+
+
+
+        AppSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainSystem.setVisibility(View.GONE); //is he gone?
+                introduction_layout.setVisibility(View.VISIBLE);
+                introduction_layout.bringToFront();
+
+
+            }
+        });
+
+        intro_close_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainSystem.setVisibility(View.VISIBLE); //is he gone?
+                introduction_layout.setVisibility(View.GONE);
+
+            }
+        });
+
+
+
 
         //----------------------------------------SystemActivity Program Start HERE!--------------------------------------------------
 
@@ -366,7 +415,7 @@ public class SystemActivity extends AppCompatActivity {
     //-------------------------------------------------------------------------------------------
     public void init_recycler_view(){
 
-        adapter = new RecyclerViewAdapter(this, CurrentProfile.getCurrentMonthExpensesList(),CurrentProfile.getFixedMonthlyExpenseList());
+        adapter = new RecyclerViewAdapter(this, CurrentProfile.getCurrentMonthExpensesList(),CurrentProfile.getFixedMonthlyExpenseList(),mView);
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recycler_view_Widget);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

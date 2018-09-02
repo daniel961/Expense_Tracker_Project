@@ -9,6 +9,7 @@
     <color name="primary_light">#C5CAE9</color>
     <color name="accent">#448AFF</color>
     <color name="primary_text">#212121</color>
+    <color name="dialog_box_remove_background">#2e2d2d</color>
     <color name="secondary_text">#757575</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
@@ -21,6 +22,7 @@
     <color name="SecundaryMesseges">#BDBDBD</color>
     <color name="Secundary">#5C4742</color>
     <color name="header">#6E8894</color>
+    <color name="header2">#4d5f68</color>
 
 
 
